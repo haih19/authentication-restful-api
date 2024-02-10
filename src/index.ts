@@ -6,6 +6,7 @@ import compression from "compression";
 import cors from "cors";
 import { config } from "dotenv";
 import mongoose from "mongoose";
+import router from "./router";
 
 config();
 
@@ -26,10 +27,6 @@ app.use(bodyParser.json());
 
 const server = http.createServer(app);
 
-app.get("/", (req, res) => {
-  res.send("hello");
-});
-
 server.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
@@ -37,3 +34,5 @@ server.listen(port, () => {
 mongoose.Promise = Promise;
 mongoose.connect(mongoUrl);
 mongoose.connection.on("error", (error: Error) => console.log(error));
+
+app.use(router);
